@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #chatbox {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: scroll;
+        }
+    
+        #userInput {
+            width: 80%;
+            padding: 10px;
+        }
+    
+        #sendButton {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GPT Chat</h1>
+    <div id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Type your message here...">
+    <button id="sendButton">Send</button>
+
+    <script>
+        document.getElementById('sendButton').onclick = async function() {
+            const userInput = document.getElementById('userInput').value;
+
+            document.getElementById('userInput').value = "";
+            document.getElementById('chatbox').innerHTML += `<p><b>You:</b> ${userInput}</p>`;
+
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userInput })
+            });
+            const data = await response.json();
+            document.getElementById('chatbox').innerHTML += "<p><b>GPT:</b> ${data.response}</p>";
+            document.getElementById('chatbox').scrollTop = document.getElementById('chatbox').scrollHeight;
+        };
+    </script>
+</body>

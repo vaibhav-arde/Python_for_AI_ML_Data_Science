@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-to-Image Generator</title>
+</head>
+<body>
+    <h1>Text-to-Image Generator</h1>
+    <div>
+        <label for="prompt">Enter your description:</label>
+        <input type="text" id="prompt" name="prompt">
+        <button onclick="generateImage()">Generate Image</button>
+    </div>
+    <div id="image-container"></div>
+    <script>
+        async function generateImage() {
+            const prompt = document.getElementById('prompt').value;
+            const responseDiv = document.getElementById('image-container');
+            const response = await fetch('/generate_image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt: prompt })
+            });
+            const data = await response.json();
+            const img = document.createElement('img');
+            img.src = data.image_url;
+            responseDiv.innerHTML = '';
+            responseDiv.appendChild(img);
+        }    
+    </script>
+</body>
+</html>
