@@ -1,0 +1,2 @@
+Hello, this is a file handling example using 'with'.
+This automatically manages the file resource.

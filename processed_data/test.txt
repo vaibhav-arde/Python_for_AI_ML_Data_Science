@@ -1,2 +1,2 @@
 I am learning file handling
- Topic is file handling, read and write
+Topic is file handling, read and write
